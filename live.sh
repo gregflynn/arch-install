@@ -13,8 +13,10 @@ SWAP="/dev/$3"
 ## Create partition format
 mkfs.ext4 $ROOT
 mkfs.vfat -F32 $EFI
-mkswap $SWAP
-swapon $SWAP
+if ! "$SWAP" -eq "" then
+	mkswap $SWAP
+	swapon $SWAP
+fi
 
 ## Mount All The Things!
 mount $ROOT /mnt
@@ -28,9 +30,7 @@ pacstrap /mnt base base-devel
 genfstab -U /mnt > /mnt/etc/fstab
 
 ## Copy next script into chroot env
-cp chroot-steps.sh /mnt
-cp bootloader.sh /mnt
-cp post.sh /mnt
+cp chroot.sh /mnt
 
 echo "ready to chroot!"
 echo "arch-chroot /mnt /bin/bash"
