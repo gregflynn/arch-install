@@ -2,13 +2,15 @@
 
 if (( $# < 2 )); then
 	echo "Insufficient parameters"
-	echo "Usage: $0 ROOT_PARTITION EFI_PARTITION [SWAP_PARTITION]"
+	echo "Usage: $0 HOSTNAME ROOT_PARTITION EFI_PARTITION [SWAP_PARTITION]"
+	echo "All partitions are of the format 'sdxY', for example 'sda1'"
 	exit
 fi
 
-ROOT="/dev/$1"
-EFI="/dev/$2"
-SWAP="/dev/$3"
+HOSTNAME="$1"
+ROOT="/dev/$2"
+EFI="/dev/$3"
+SWAP="/dev/$4"
 
 ## Create partition format
 mkfs.ext4 $ROOT
@@ -24,7 +26,7 @@ mkdir /mnt/boot
 mount $EFI /mnt/boot
 
 ## Install base system
-pacstrap /mnt base base-devel
+pacstrap /mnt base base-devel dosfstools efibootmgr gummiboot
 
 ## Generate an FSTAB
 genfstab -U /mnt > /mnt/etc/fstab
@@ -32,5 +34,6 @@ genfstab -U /mnt > /mnt/etc/fstab
 ## Copy next script into chroot env
 cp chroot.sh /mnt
 
-echo "ready to chroot!"
-echo "arch-chroot /mnt /bin/bash"
+## chroot in and run those steps!
+arch-chroot /mnt /chroot.sh $ROOT $HOSTNAME
+rm /mnt/chroot.sh
