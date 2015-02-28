@@ -1,8 +1,8 @@
 #! /bin/bash
 
-if ! $# -eq 3 then
+if ! $# -le 2 then
 	echo "Insufficient parameters"
-	echo "./pre.sh [root partition (sda1)] [efi partition (sda2)] [swap partition (sda3)]"
+	echo "./pre.sh ROOT_PARTITION EFI_PARTITION [SWAP_PARTITION]"
 	exit
 fi
 
