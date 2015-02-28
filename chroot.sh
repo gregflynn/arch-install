@@ -1,8 +1,8 @@
 #! /bin/bash
 
-if ! $# -eq 2 then
+if (( $# != 2 )); then
 	echo "Insufficent parameters"
-	echo "Usage: ./chroot.sh ROOT_PARTITION HOSTNAME"
+	echo "Usage: $0 ROOT_PARTITION HOSTNAME"
 	exit
 fi
 

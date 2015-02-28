@@ -1,8 +1,8 @@
 #! /bin/bash
 
-if ! $# -le 2 then
+if (( $# < 2 )); then
 	echo "Insufficient parameters"
-	echo "./pre.sh ROOT_PARTITION EFI_PARTITION [SWAP_PARTITION]"
+	echo "Usage: $0 ROOT_PARTITION EFI_PARTITION [SWAP_PARTITION]"
 	exit
 fi
 
@@ -13,7 +13,7 @@ SWAP="/dev/$3"
 ## Create partition format
 mkfs.ext4 $ROOT
 mkfs.vfat -F32 $EFI
-if ! "$SWAP" -eq "" then
+if [ "$SWAP" != "" ]; then
 	mkswap $SWAP
 	swapon $SWAP
 fi

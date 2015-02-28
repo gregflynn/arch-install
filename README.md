@@ -9,8 +9,10 @@ USE AT YOUR OWN RISK
 1. Copy all scripts to Arch Live USB
 2. Make partitions via the Arch Linux instructions
     * Note: Scripts require 1 root partition, 1 EFI boot partition, and optionally a swap partition
-3. ./live.sh
-4. arch-chroot /mnt /bin/bash
-5. /chroot.sh
-6. exit
-7. ./post.sh
+3. Connect to the internet
+4. cd /run/archiso/bootmnt/arch-install/
+5. ./live.sh
+6. arch-chroot /mnt /bin/bash
+7. /chroot.sh
+8. exit
+9. ./post.sh
