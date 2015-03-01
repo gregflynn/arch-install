@@ -26,7 +26,7 @@ mkdir /mnt/boot
 mount $EFI /mnt/boot
 
 ## Install base system
-pacstrap /mnt base base-devel dosfstools efibootmgr gummiboot
+pacstrap /mnt base base-devel dosfstools efibootmgr gummiboot dialog xorg-server xf86-video-intel lightdm lightdm-gtk2-greeter xfce4 linux-headers wpa_supplicant
 
 ## Generate an FSTAB
 genfstab -U /mnt > /mnt/etc/fstab
