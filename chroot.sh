@@ -33,7 +33,6 @@ passwd
 
 echo "Installing bootloader..."
 BOOT="/boot"
-#pacman -S dosfstools efibootmgr gummiboot
 gummiboot --path=$BOOT install
 
 ## Write Arch bootloader conf
@@ -42,6 +41,6 @@ echo "linux	/vmlinuz-linux" >> $BOOT/loader/entries/arch.conf
 echo "initrd	/initramfs-linux.img" >> $BOOT/loader/entries/arch.conf
 echo "options	root=$ROOT rw" >> $BOOT/loader/entries/arch.conf
 echo "default	arch" > $BOOT/loader/loader.conf
-echo "timeout	1" >> $BOOT/loader/loader.conf
+echo "timeout	0" >> $BOOT/loader/loader.conf
 
 echo "Done!"
