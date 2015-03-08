@@ -1,0 +1,5 @@
+xfce-theme-greybird
+elementary-xfce-icons
+atom-editor
+google-chrome
+xfce4-windowck-plugin

@@ -16,3 +16,4 @@ ttf-ubuntu-font-family
 networkmanager
 network-manager-applet
 synapse
+firefox

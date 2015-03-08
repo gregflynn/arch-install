@@ -26,12 +26,6 @@ mount $ROOT /mnt
 mkdir /mnt/boot
 mount $EFI /mnt/boot
 
-# download AUR script
-# NOTE: this is done here because of the flakiness of the r8723au driver on my Lenovo Yoga 11s
-mkdir -p /mnt/usr/bin
-curl aur.sh > /mnt/usr/bin/aur.sh
-chmod +x /mnt/usr/bin/aur.sh
-
 ## Install base system
 PACKAGES=`sed ':a;N;$!ba;s/\n/ /g' packages.txt`
 pacstrap /mnt base base-devel $PACKAGES
@@ -51,18 +45,16 @@ arch-chroot /mnt useradd -m -G wheel -s /bin/bash $USER
 echo "Enter user password"
 arch-chroot /mnt passwd $USER
 
-## install AUR packages!
-# NOTE: this is all commented out because it does not work but worth keeping around
-# if I ever feel the urge to get this working
-# AUR_PACKAGES=`sed ':a;N;$!ba;s/\n/ /g' packages.txt`
-# if [ "$AUR_PACKAGES" != "" ]; then
-#     echo "#! /bin/bash" > /mnt/home/$USER/install-aur.sh
-#     echo "mkdir /home/$USER/aur" >> /mnt/home/$USER/install-aur.sh
-#     echo "cd /home/$USER/aur" >> /mnt/home/$USER/install-aur.sh
-#     echo "aur.sh $AUR_PACKAGES" >> /mnt/home/$USER/install-aur.sh
-#     chmod +x /mnt/home/$USER/install-aur.sh
-#     chroot --userspec=$USER:wheel /mnt /home/$USER/install-aur.sh
-# fi
+## AUR package installer
+AUR_PACKAGES=`sed ':a;N;$!ba;s/\n/ /g' aur-packages.txt`
+AURSH="/mnt/home/$USER/install-aur.sh"
+echo "#! /bin/bash"                        > $AURSH
+echo "sudo curl aur.sh > /usr/bin/aur.sh" >> $AURSH
+echo "sudo chmod +x /usr/bin/aur.sh"      >> $AURSH
+echo "mkdir /home/$USER/aur"              >> $AURSH
+echo "cd /home/$USER/aur"                 >> $AURSH
+echo "aur.sh -si $AUR_PACKAGES"           >> $AURSH
+chmod +x /mnt/home/$USER/install-aur.sh
 
 ## blacklist pcspkr!
 echo "blacklist pcspkr" > /mnt/etc/modprobe.d/nobeep.conf
