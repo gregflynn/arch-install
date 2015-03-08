@@ -48,6 +48,8 @@ rm /mnt/chroot.sh
 
 ## Add a user
 arch-chroot /mnt useradd -m -G wheel -s /bin/bash $USER
+echo "Enter user password"
+arch-chroot /mnt passwd $USER
 
 ## install AUR packages!
 # NOTE: this is all commented out because it does not work but worth keeping around

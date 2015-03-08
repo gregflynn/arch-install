@@ -28,6 +28,14 @@ echo $HOSTNAME > /etc/hostname
 echo "127.0.0.1	localhost.localdomain	localhost $HOSTNAME" > /etc/hosts
 echo "::1	localhost.localdomain	localhost $HOSTNAME" >> /etc/hosts
 
+# enable lightdm
+echo "Enabling LightDm..."
+systemctl enable lightdm.service
+
+# enable NetworkManager
+echo "Enabling NetworkManager..."
+systemctl enable NetworkManager.service
+
 echo "Enter the ROOT password"
 passwd
 
