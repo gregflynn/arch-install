@@ -5,7 +5,7 @@ dialog
 xorg-server
 xf86-video-intel
 lightdm
-lightdm-gtk2-greeter
+lightdm-gtk-greeter
 xfce4
 xfce4-goodies
 linux-headers
